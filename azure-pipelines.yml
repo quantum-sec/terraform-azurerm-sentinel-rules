@@ -1,3 +1,10 @@
+trigger:
+  branches:
+    include:
+      - master
+      - feature/*
+      - fix/*
+
 resources:
   repositories:
     - repository: pipeline-library
@@ -6,4 +13,6 @@ resources:
       name: quantum-sec/pipeline-library
 
 jobs:
-  - template: templates/validation/pre-commit.yml@pipeline-library
+  - template: templates/jobs/default.yml@pipeline-library
+    parameters:
+      containerImage: quantumci.azurecr.io/quantum-ci-terragrunt:latest
