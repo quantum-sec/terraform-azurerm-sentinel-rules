@@ -1,6 +1,6 @@
 # package-azure-sentinel
 
-This repository contains modules for deploying and managing Azure sentinel scheduled alert rules which are used to detect cyber threats.
+This repository contains modules for deploying and managing Azure sentinel supporting features which are used to detect cyber threats like analytical rules, playbooks, jupyter notebooks etc.
 
 ## Using a Terraform Module
 
