@@ -52,8 +52,8 @@ variable "suppression_duration" {
   type        = string
 }
 
-variable "suppression_enabled " {
-  description = "(Optional) Should the Sentinel Scheduled Alert Rulea stop running query after alert is generated? Defaults to false."
+variable "suppression_enabled" {
+  description = "(Optional) Should the Sentinel Scheduled Alert Rules stop running query after alert is generated? Defaults to false."
   type        = bool
 }
 
