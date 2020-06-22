@@ -5,6 +5,7 @@ variable "name" {
 
 variable "log_analytics_workspace_id" {
   description = "workspace id of LA workspace on which sentinel is deployed."
+  type        = string
 }
 
 variable "display_name" {
