@@ -6,7 +6,7 @@ terraform {
   required_version = ">= 0.12"
 }
 
-resource "azurerm_sentinel_alert_rule_scheduled" "qsrule" {
+resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
   name                       = var.name
   log_analytics_workspace_id = var.log_analytics_workspace_id
   display_name               = var.display_name
