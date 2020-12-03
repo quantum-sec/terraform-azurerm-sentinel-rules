@@ -5,6 +5,7 @@
 function update_package_json() {
   local -r package_name="$1"
   echo "Enter a short description for the repository (package.json):"
+  echo '  (e.g. "Contains modules for deploying and managing <type> resources.")'
   read -r description
   sed -i "s/template-terraform-package/$package_name/" package.json
   sed -i "s/{{package_description}}/$description/" package.json
@@ -14,6 +15,7 @@ function update_package_json() {
 function update_readme() {
   local -r package_name="$1"
   echo "Enter a long description for the repository (README.md):"
+  echo '  (e.g. "This repository contains modules for deploying and managing <type> resources. <context>.")'
   read -r description
   sed -i "s/template-terraform-package/$package_name/" README.md
   sed -i "s/{{package_description}}/$description/" README.md
