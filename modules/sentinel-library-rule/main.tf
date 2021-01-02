@@ -17,12 +17,12 @@ module "rule" {
   tactics      = local.rule_data["tactics"]
 
   query           = local.rule_data["query"]
-  query_frequency = local.rule_data["queryFrequency"]
-  query_period    = local.rule_data["queryPeriod"]
+  query_frequency = "PT${upper(local.rule_data["queryFrequency"])}"
+  query_period    = "PT${upper(local.rule_data["queryPeriod"])}"
 
   trigger_operator  = local.rule_data["triggerOperator"]
   trigger_threshold = local.rule_data["triggerThreshold"]
 
-  suppression_duration = local.rule_data["suppressionDuration"]
+  suppression_duration = local.rule_data["suppressionEnabled"] == true ? "PT${upper(local.rule_data["suppressionDuration"])}" : null
   suppression_enabled  = local.rule_data["suppressionEnabled"]
 }
