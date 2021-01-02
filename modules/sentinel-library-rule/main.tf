@@ -1,4 +1,6 @@
-
+terraform {
+  required_version = ">= 0.12.26"
+}
 
 locals {
   rule_data     = yamldecode(file("${path.module}/../../content/rules/${var.path}.yaml"))
