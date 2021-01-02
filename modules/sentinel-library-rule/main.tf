@@ -1,15 +1,16 @@
 
 
 locals {
-  rule_data = yamldecode(file("${path.module}/../../content/rules/${var.path}.yaml"))
+  rule_data     = yamldecode(file("${path.module}/../../content/rules/${var.path}.yaml"))
+  path_elements = split("/", var.path)
 }
 
 module "rule" {
   source = "../sentinel-scheduled-alert-rule"
 
-  name                       = var.path
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
+  name         = element(local.path_elements, length(local.path_elements) - 1)
   display_name = local.rule_data["displayName"]
   description  = local.rule_data["description"]
   severity     = local.rule_data["severity"]
