@@ -1,7 +1,7 @@
 
 
 locals {
-  rule_data = yamldecode(file("${path.module}/../content/rules/${var.path}.yaml"))
+  rule_data = yamldecode(file("${path.module}/../../content/rules/${var.path}.yaml"))
 }
 
 module "rule" {
