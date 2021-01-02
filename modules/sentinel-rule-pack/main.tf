@@ -9,7 +9,7 @@ locals {
 module "rule" {
   source = "../sentinel-library-rule"
 
-  for_each = local.rules
+  for_each = toset(local.rules)
 
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
