@@ -4,7 +4,7 @@ variable "name" {
 }
 
 variable "application" {
-  description = "The target application where the parser would be applied."
+  description = "The directory structure in which the parser file is nested, typically representing the target application whose logs and events are parsed by this parser."
   type        = string
 }
 
