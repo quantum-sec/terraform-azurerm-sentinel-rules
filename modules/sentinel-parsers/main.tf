@@ -3,14 +3,15 @@ terraform {
 }
 
 locals {
-  root_dir = "${path.module}/../../content/parsers/"
-  files    = fileset(local.root_dir, "**/*.kql")
+  root_dir  = "${path.module}/../../content/parsers/"
+  files_raw = fileset(local.root_dir, "**/Quantum_*.kql")
+  files     = toset([for file in local.files_raw : file if length(regexall("^uncategorized", file)) == 0])
 }
 
 module "function" {
   source = "../sentinel-kql-function"
 
-  for_each = toset([for file in local.files : file if(length(regexall("\\/Quantum_.*\\.kql$", file)) > 0 && length(regexall("^uncategorized", file)) == 0)])
+  for_each = local.files
 
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
