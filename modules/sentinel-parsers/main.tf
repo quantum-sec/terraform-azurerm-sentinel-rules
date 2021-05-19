@@ -18,6 +18,6 @@ module "function" {
   source_path = local.root_dir
   description = "Quantum Parser Functions"
   name        = replace(basename(each.value), ".kql", "")
-  application = replace(each.value, basename(each.value), "")
+  application = replace(each.value, "/${basename(each.value)}", "")
   tags        = var.tags
 }
