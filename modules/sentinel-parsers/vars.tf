@@ -1,5 +1,5 @@
 variable "log_analytics_workspace_id" {
-  description = "The ID of the Log Analytics workspace with which the saved search will be associated."
+  description = "The ID of the Log Analytics workspace with which the saved searches will be associated."
   type        = string
 }
 
