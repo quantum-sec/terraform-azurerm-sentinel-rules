@@ -1,8 +1,4 @@
-output "parser_id" {
-  description = "The unique identifier of the parser function."
-
-  value = {
-    parser = local.files
-    id     = [for file in local.files : module.function[file]][0].id
-  }
+output "ids" {
+  description = "A map of function aliases to their corresponding unique identifiers."
+  value       = tomap({ for name, parser in module.function : name => parser.id })
 }

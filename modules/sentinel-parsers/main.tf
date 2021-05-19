@@ -3,21 +3,23 @@ terraform {
 }
 
 locals {
-  root_dir  = "${path.module}/../../content/parsers/"
-  files_raw = fileset(local.root_dir, "**/Quantum_*.kql")
-  files     = toset([for file in local.files_raw : file if length(regexall("^uncategorized", file)) == 0])
+  root_dir          = "${path.module}/../../content/parsers/"
+  files             = fileset(local.root_dir, "**/Quantum_*.kql")
+  categorized_files = toset([for categorized in local.files : categorized if length(regexall("^uncategorized", categorized)) == 0])
+  file_map          = { for f in local.categorized_files : replace(basename(f), ".kql", "") => file("${local.root_dir}${f}") }
 }
 
 module "function" {
-  source = "../sentinel-kql-function"
+  source = "git::git@github.com:quantum-sec/package-log-analytics.git//modules/log-analytics-saved-search?ref=1.2.0"
 
-  for_each = local.files
+  for_each = local.file_map
 
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
-  source_path = local.root_dir
-  description = "Quantum Parser Functions"
-  name        = replace(basename(each.value), ".kql", "")
-  application = replace(each.value, "/${basename(each.value)}", "")
-  tags        = var.tags
+  name           = each.key
+  display_name   = each.key
+  category       = "Quantum Parser Functions"
+  query          = each.value
+  function_alias = each.key
+  tags           = var.tags
 }
