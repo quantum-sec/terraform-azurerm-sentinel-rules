@@ -13,8 +13,8 @@ variable "application" {
   type        = string
 
   validation {
-    condition     = (var.application != "uncategorize" && var.application != "")
-    error_message = "The application directory should not be uncategorize and should not be empty."
+    condition     = (var.application != "uncategorized" && length(regexall("^[^\\.][^:\\*\\?\"<>\\|]+$", var.application)) > 0)
+    error_message = "The application directory should not be uncategorized and sould be a valid folder name."
   }
 }
 
