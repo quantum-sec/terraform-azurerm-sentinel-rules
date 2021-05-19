@@ -5,7 +5,7 @@ terraform {
 locals {
   root_dir          = "${path.module}/../../content/parsers/"
   files             = fileset(local.root_dir, "**/Quantum_*.kql")
-  categorized_files = toset([for categorized in local.files : categorized if length(regexall("^uncategorized", categorized)) == 0])
+  categorized_files = toset([for f in local.files : f if length(regexall("^uncategorized", f)) == 0])
   file_map          = { for f in local.categorized_files : replace(basename(f), ".kql", "") => file("${local.root_dir}${f}") }
 }
 
