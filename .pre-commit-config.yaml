@@ -24,4 +24,4 @@ repos:
     rev: 1.0.0
     hooks:
       - id: terraform-validate
-        args: [--azurerm-provider-version=2.34.0]
+        args: [--azurerm-provider-version=2.71.0]

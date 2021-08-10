@@ -21,4 +21,15 @@ resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
   suppression_enabled        = var.suppression_enabled
   trigger_operator           = var.trigger_operator
   trigger_threshold          = var.trigger_threshold
+
+  incident_configuration {
+    create_incident = var.create_incident
+    grouping {
+      enabled                 = var.grouping
+      lookback_duration       = var.lookback_duration
+      reopen_closed_incidents = var.reopen_closed_incidents
+      entity_matching_method  = var.entity_matching_method
+      group_by                = var.group_by
+    }
+  }
 }

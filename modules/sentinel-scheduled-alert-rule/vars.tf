@@ -72,3 +72,49 @@ variable "trigger_threshold" {
   description = "The threshold of query results returned, compared by `trigger_operator`, that would cause this rule to trigger an alert."
   type        = string
 }
+
+variable "create_incident" {
+  description = "Enable create an incident from alerts triggered by Sentinel Scheduled Alert Rule."
+  type        = bool
+  default     = false
+}
+
+variable "grouping" {
+  description = "Enable grouping incidents created from alerts triggered by Sentinel Scheduled Alert Rule."
+  type        = bool
+  default     = true
+}
+
+variable "lookback_duration" {
+  description = "Limit the group to alerts created within the lookback duration (in ISO 8601 duration format)."
+  type        = string
+  default     = "PT5M"
+}
+
+variable "reopen_closed_incidents" {
+  description = "Enable re-open of closed matching incidents."
+  type        = bool
+  default     = false
+}
+
+variable "entity_matching_method" {
+  description = "The method used to group incidents."
+  type        = string
+  default     = "None"
+
+  validation {
+    condition     = contains(["All", "Custom", "None"], var.entity_matching_method)
+    error_message = "You can use either text or liquid for HTML body."
+  }
+}
+
+variable "group_by" {
+  description = "A list of entity types to group by, only when the entity_matching_method is set to Custom."
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition     = ! contains([for item in var.group_by : contains(["Account", "Host", "Url", "Ip"], item)], false)
+    error_message = "The group_by items contain non-valid value(s). Possible values are Account, Host, Url, Ip."
+  }
+}
