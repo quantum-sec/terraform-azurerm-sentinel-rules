@@ -32,7 +32,7 @@ module "rule" {
 
   create_incident         = local.create_incident ? local.rule_data["incidentConfiguration"]["createIncident"] : false
   grouping                = local.create_incident ? local.rule_data["incidentConfiguration"]["grouping"]["enabled"] : false
-  lookback_duration       = local.create_incident ? local.rule_data["incidentConfiguration"]["grouping"]["lookbackDuration"] : "PT5M"
+  lookback_duration       = local.create_incident ? "PT${upper(local.rule_data["incidentConfiguration"]["grouping"]["lookbackDuration"])}" : "PT5M"
   reopen_closed_incidents = local.create_incident ? local.rule_data["incidentConfiguration"]["grouping"]["reopenClosedIncidents"] : false
   entity_matching_method  = local.create_incident ? local.rule_data["incidentConfiguration"]["grouping"]["entityMatchingMethod"] : "None"
   group_by                = local.create_incident ? local.rule_data["incidentConfiguration"]["grouping"]["groupBy"] : []

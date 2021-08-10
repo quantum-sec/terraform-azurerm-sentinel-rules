@@ -104,7 +104,7 @@ variable "entity_matching_method" {
 
   validation {
     condition     = contains(["All", "Custom", "None"], var.entity_matching_method)
-    error_message = "You can use either text or liquid for HTML body."
+    error_message = "The entity_matching_method items contain non-valid value. Possible values are ALL, CUSTOM, NONE."
   }
 }
 
@@ -114,7 +114,7 @@ variable "group_by" {
   default     = []
 
   validation {
-    condition     = ! contains([for item in var.group_by : contains(["Account", "Host", "Url", "Ip"], item)], false)
-    error_message = "The group_by items contain non-valid value(s). Possible values are Account, Host, Url, Ip."
+    condition     = ! contains([for item in var.group_by : contains(["Account", "Host", "URL", "IP"], item)], false)
+    error_message = "The group_by items contain non-valid value(s). Possible values are Account, Host, URL, IP."
   }
 }
