@@ -88,7 +88,7 @@ variable "grouping" {
 variable "lookback_duration" {
   description = "Limit the group to alerts created within the lookback duration (in ISO 8601 duration format)."
   type        = string
-  default     = "PT5M"
+  default     = "PT5H"
 }
 
 variable "reopen_closed_incidents" {
