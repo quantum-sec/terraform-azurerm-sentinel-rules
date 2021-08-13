@@ -72,3 +72,49 @@ variable "trigger_threshold" {
   description = "The threshold of query results returned, compared by `trigger_operator`, that would cause this rule to trigger an alert."
   type        = string
 }
+
+variable "create_incident" {
+  description = "Whether or not an incident should be created from alerts triggered by this rule."
+  type        = bool
+  default     = false
+}
+
+variable "grouping" {
+  description = "Enable grouping of incidents created from alerts triggered by this rule."
+  type        = bool
+  default     = true
+}
+
+variable "lookback_duration" {
+  description = "The duration of time in which new alerts should be associated to an existing related incident (in ISO 8601 duration format)."
+  type        = string
+  default     = "PT5H"
+}
+
+variable "reopen_closed_incidents" {
+  description = "Whether or not to re-open existing incidents when new alerts are triggered. When set to `true` incidents are re-opened and new alerts are associated to them. When set to `false` a new incident is created."
+  type        = bool
+  default     = false
+}
+
+variable "entity_matching_method" {
+  description = "The method used to group incidents (one of `All`, `Custom`, or `None`). When set to `Custom` you must also specify the `group_by` argument."
+  type        = string
+  default     = "None"
+
+  validation {
+    condition     = contains(["All", "Custom", "None"], var.entity_matching_method)
+    error_message = "The entity_matching_method items contain non-valid value. Possible values are All, Custom, or  None."
+  }
+}
+
+variable "group_by" {
+  description = "A list of entity types to group by, only when the entity_matching_method is set to Custom."
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition     = ! contains([for item in var.group_by : contains(["Account", "Host", "Url", "Ip"], item)], false)
+    error_message = "The list contains one or more invalid values. Possible values are Account, Host, Url, and Ip."
+  }
+}
