@@ -3,7 +3,8 @@ terraform {
 }
 
 locals {
-  rules = yamldecode(file("${path.module}/../../content/packs/${var.path}.yaml")).rules
+  pack_rules = yamldecode(file("${path.module}/../../content/packs/${var.path}.yaml")).rules
+  rules      = setsubtract(local.pack_rules, var.exclude_rules)
 }
 
 module "rule" {
