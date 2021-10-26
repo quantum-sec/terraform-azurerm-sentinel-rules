@@ -7,11 +7,6 @@ variable "path" {
   }
 }
 
-variable "log_analytics_workspace_id" {
-  description = "The ID of the Log Analytics workspace in which Azure Sentinel is deployed."
-  type        = string
-}
-
 variable "exclude_rules" {
   description = "A set of rule paths that will be excluded from rules found in `var.path`.\nThese are relative paths from the `content/rules` directory (e.g. `linux/ssh-brute-force-detected`)."
   type        = set(string)
