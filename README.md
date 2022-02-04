@@ -13,6 +13,6 @@
 [repository_tag_link]:https://github.com/quantum-sec/template-terraform-package/releases/latest
 [terraform_version_image]:https://img.shields.io/badge/tf-%3E%3D1.0.x-blue.svg
 [license_badge_image]:https://img.shields.io/github/license/quantum-sec/template-terraform-package.svg
-[license_badge_link]:./LICENSE
+[license_badge_link]:./LICENSE.txt
 [maintained_badge_image]:https://img.shields.io/badge/maintained%20by-quantum.security-00da55
 [maintained_badge_link]:https://www.quantum.security?utm_source=github&utm_medium=organic_oss&utm_campaign=template-terraform-package
