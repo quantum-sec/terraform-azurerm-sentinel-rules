@@ -8,5 +8,5 @@
     "url": "git@github.com:quantum-sec/template-terraform-package.git"
   },
   "author": "Quantum Security Pte. Ltd.",
-  "license": "SEE LICENSE IN LICENSE"
+  "license": "Apache-2.0"
 }
