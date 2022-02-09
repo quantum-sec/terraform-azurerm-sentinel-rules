@@ -8,6 +8,14 @@
 
 {{package_description}}
 
+# Documentation
+
+<!-- BEGIN_TF_DOCS -->
+
+<!-- END_TF_DOCS -->
+
+---
+
 [build_badge_image]:https://img.shields.io/azure-devops/build/quantum-sec/Quantum/quantum-sec.template-terraform-package/master
 [repository_tag_image]:https://img.shields.io/github/tag/quantum-sec/template-terraform-package.svg?label=latest
 [repository_tag_link]:https://github.com/quantum-sec/template-terraform-package/releases/latest
