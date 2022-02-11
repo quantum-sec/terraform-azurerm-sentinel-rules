@@ -16,14 +16,21 @@ repos:
         args: [--fix=no]
       - id: trailing-whitespace
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.62.3
+    rev: v1.64.0
     hooks:
       - id: terraform_fmt
       - id: terraform_tflint
       - id: terraform_tfsec
+  - repo: https://github.com/terraform-docs/terraform-docs
+    rev: v0.16.0
+    hooks:
+      - id: terraform-docs-system
+        name: Terraform generate docs
+        files: (\.terraform-docs.yml|README.md|\.tf(vars)?)$
+        args:
+          - "."
   - repo: https://github.com/quantum-sec/pre-commit
     rev: 1.2.0
     hooks:
       - id: terraform-lock-fail
-      - id: terraform-docs
       - id: terraform-validate
