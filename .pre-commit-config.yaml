@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.4.0
+    rev: v4.1.0
     hooks:
       - id: check-added-large-files
       - id: check-byte-order-marker
@@ -16,12 +16,21 @@ repos:
         args: [--fix=no]
       - id: trailing-whitespace
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.37.0
+    rev: v1.64.0
     hooks:
       - id: terraform_fmt
       - id: terraform_tflint
       - id: terraform_tfsec
-  - repo: https://github.com/quantum-sec/pre-commit
-    rev: 1.1.1
+  - repo: https://github.com/terraform-docs/terraform-docs
+    rev: v0.16.0
     hooks:
+      - id: terraform-docs-system
+        name: Terraform generate docs
+        files: (\.terraform-docs.yml|README.md|\.tf(vars)?)$
+        args:
+          - "."
+  - repo: https://github.com/quantum-sec/pre-commit
+    rev: 1.2.0
+    hooks:
+      - id: terraform-lock-fail
       - id: terraform-validate
