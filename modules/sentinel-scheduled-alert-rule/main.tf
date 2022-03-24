@@ -26,7 +26,7 @@ resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
   trigger_operator           = var.trigger_operator
   trigger_threshold          = var.trigger_threshold
 
-  dynamic incident_configuration {
+  dynamic "incident_configuration" {
     for_each = local.incident_configuration
     content {
       create_incident = var.create_incident

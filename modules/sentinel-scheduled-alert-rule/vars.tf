@@ -114,7 +114,7 @@ variable "group_by" {
   default     = []
 
   validation {
-    condition     = ! contains([for item in var.group_by : contains(["Account", "Host", "Url", "Ip"], item)], false)
+    condition     = !contains([for item in var.group_by : contains(["Account", "Host", "Url", "Ip"], item)], false)
     error_message = "The list contains one or more invalid values. Possible values are Account, Host, Url, and Ip."
   }
 }
