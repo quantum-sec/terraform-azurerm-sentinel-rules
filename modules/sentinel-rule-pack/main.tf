@@ -6,8 +6,9 @@ terraform {
 module "rule_pack_rules" {
   source = "../sentinel-rule-pack-rules"
 
-  path          = var.path
-  exclude_rules = var.exclude_rules
+  content_path_packs = var.content_path_packs
+  path               = var.path
+  exclude_rules      = var.exclude_rules
 }
 
 module "rule" {
@@ -16,6 +17,8 @@ module "rule" {
   for_each = module.rule_pack_rules.rules
 
   log_analytics_workspace_id = var.log_analytics_workspace_id
+
+  content_path_rules = var.content_path_rules
 
   path = each.value
 }

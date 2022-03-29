@@ -13,3 +13,14 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "content_path_functions" {
+  description = <<-EOT
+  The path to the functions directory.
+
+  Default empty value will use pre-packaged functions.
+  If you have packs in /opt/xdr/content/functions then you may want to provide a value of "/opt/xdr/content/functions"
+  EOT
+  type        = string
+  default     = ""
+}
