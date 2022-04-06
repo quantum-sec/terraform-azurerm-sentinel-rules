@@ -8,3 +8,14 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "content_path_parsers" {
+  description = <<-EOT
+  The path to the parsers directory.
+
+  Default empty value will use pre-packaged parsers.
+  If you have parsers in /opt/xdr/content/parsers then you may want to provide a value of "/opt/xdr/content/parsers"
+  EOT
+  type        = string
+  default     = ""
+}

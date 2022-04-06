@@ -4,6 +4,7 @@ terraform {
 }
 
 locals {
-  all_rules = toset(yamldecode(file("${path.module}/../../content/packs/${var.path}.yaml")).rules)
+  root_dir  = coalesce(var.content_path_packs, "${path.module}/../../content/packs")
+  all_rules = toset(yamldecode(file("${local.root_dir}/${var.path}.yaml")).rules)
   rules     = setsubtract(local.all_rules, var.exclude_rules)
 }

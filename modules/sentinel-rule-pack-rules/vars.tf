@@ -12,3 +12,14 @@ variable "exclude_rules" {
   type        = set(string)
   default     = []
 }
+
+variable "content_path_packs" {
+  description = <<-EOT
+  The path to the rule packs directory.
+
+  Default empty value will use pre-packaged rule packs.
+  If you have packs in /opt/xdr/content/packs then you may want to provide a value of "/opt/xdr/content/packs"
+  EOT
+  type        = string
+  default     = ""
+}

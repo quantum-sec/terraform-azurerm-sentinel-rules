@@ -25,3 +25,5 @@ repos:
     hooks:
       - id: terraform-validate
         args: [--azurerm-provider-version=2.71.0]
+        stages:
+          - push

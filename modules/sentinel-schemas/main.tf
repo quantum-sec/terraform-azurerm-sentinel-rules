@@ -3,9 +3,9 @@ terraform {
 }
 
 locals {
-  root_dir = "${path.module}/../../content/schemas/"
-  files    = fileset(local.root_dir, "**/Quantum_*_Schema.kql")
-  file_map = { for f in local.files : replace(basename(f), ".kql", "") => file("${local.root_dir}${f}") }
+  root_dir = coalesce(var.content_path_schemas, "${path.module}/../../content/schemas")
+  files    = fileset("${local.root_dir}/", "**/Quantum_*_Schema.kql")
+  file_map = { for f in local.files : replace(basename(f), ".kql", "") => file("${local.root_dir}/${f}") }
 }
 
 module "function" {
