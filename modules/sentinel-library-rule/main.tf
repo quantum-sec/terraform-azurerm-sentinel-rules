@@ -6,8 +6,8 @@ locals {
   root_dir                 = coalesce(var.content_path_rules, "${path.module}/../../content/rules")
   rule_data                = yamldecode(file("${local.root_dir}/${var.path}.yaml"))
   path_elements            = split("/", var.path)
-  create_incident          = try(lookup(local.rule_data["incidentConfiguration"], "createIncident", null), null)
-  create_incident_grouping = try(local.rule_data["incidentConfiguration"]["grouping"], {})
+  create_incident          = try(lookup(local.rule_data["incidentConfiguration"], "createIncident", false), false)
+  create_incident_grouping = try(lookup(local.rule_data["incidentConfiguration"], "grouping", {}), {})
 }
 
 module "rule" {
