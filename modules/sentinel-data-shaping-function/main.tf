@@ -4,7 +4,7 @@ terraform {
 
 locals {
   root_dir = coalesce(var.content_path_functions, "${path.module}/../../content/functions")
-  query    = file("${path.root_dir}/${var.name}.kql")
+  query    = file("${local.root_dir}/${var.name}.kql")
 }
 
 module "function" {
