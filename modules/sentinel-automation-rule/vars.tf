@@ -24,3 +24,14 @@ variable "log_analytics_workspace_id" {
 variable "logic_app_id" {
   type = string
 }
+
+variable "enabled" {
+  type    = bool
+  default = true
+}
+
+variable "expiration" {
+  description = "The UTC time in RFC3339 format"
+  type        = string
+  default     = null
+}

@@ -7,6 +7,8 @@ resource "azurerm_sentinel_automation_rule" "automation_rule" {
   log_analytics_workspace_id = var.log_analytics_workspace_id
   name                       = uuid()
   order                      = 1
+  enabled                    = var.enabled
+  expiration                 = var.expiration
 
   dynamic "condition" {
     for_each = var.conditions
