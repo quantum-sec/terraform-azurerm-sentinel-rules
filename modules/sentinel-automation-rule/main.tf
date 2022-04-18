@@ -6,7 +6,7 @@ resource "azurerm_sentinel_automation_rule" "automation_rule" {
   display_name               = var.display_name
   log_analytics_workspace_id = var.log_analytics_workspace_id
   name                       = uuid()
-  order                      = 1
+  order                      = var.rule_order
   enabled                    = var.enabled
   expiration                 = var.expiration
 
@@ -22,6 +22,6 @@ resource "azurerm_sentinel_automation_rule" "automation_rule" {
 
   action_playbook {
     logic_app_id = var.logic_app_id
-    order        = 1
+    order        = var.action_order
   }
 }
