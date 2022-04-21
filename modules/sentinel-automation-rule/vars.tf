@@ -4,11 +4,7 @@ variable "display_name" {
 
 # The default condition is when Status = Active
 variable "conditions" {
-  default = [{
-    operator = "Equals"
-    property = "IncidentStatus"
-    values   = ["Active"]
-  }]
+  default = []
 
   type = list(object({
     operator = string
