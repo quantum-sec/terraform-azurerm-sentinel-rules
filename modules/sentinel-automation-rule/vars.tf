@@ -2,6 +2,11 @@ variable "display_name" {
   type = string
 }
 
+variable "unique_prefix" {
+  description = "Unique string used to generate a UUID."
+  type        = string
+}
+
 # The default condition is when Status = Active
 variable "conditions" {
   default = []

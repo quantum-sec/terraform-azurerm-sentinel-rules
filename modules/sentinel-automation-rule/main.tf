@@ -5,7 +5,7 @@ terraform {
 resource "azurerm_sentinel_automation_rule" "automation_rule" {
   display_name               = var.display_name
   log_analytics_workspace_id = var.log_analytics_workspace_id
-  name                       = uuid()
+  name                       = uuidv5("dns", var.unique_prefix)
   order                      = var.rule_order
   enabled                    = var.enabled
   expiration                 = var.expiration
