@@ -35,7 +35,7 @@ variable "action_order" {
 
 variable "enabled" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "expiration" {
