@@ -108,13 +108,25 @@ variable "entity_matching_method" {
   }
 }
 
-variable "group_by" {
-  description = "A list of entity types to group by, only when the entity_matching_method is set to Custom."
+variable "group_by_entities" {
+  description = "A list of entity types to group by, only when the entity_matching_method is Selected."
   type        = list(string)
   default     = []
 
   validation {
-    condition     = !contains([for item in var.group_by : contains(["Account", "Host", "Url", "Ip"], item)], false)
-    error_message = "The list contains one or more invalid values. Possible values are Account, Host, Url, and Ip."
+    condition     = !contains([for item in var.group_by_entities : contains(["Account", "AzureResource", "CloudApplication", "DNS", "File", "FileHash", "Host", "IP", "Mailbox", "MailCluster", "MailMessage", "Malware", "Process", "RegistryKey", "RegistryValue", "SecurityGroup", "SubmissionMail", "URL"], item)], false)
+    error_message = "The list contains one or more invalid values. Possible values are Account, AzureResource, CloudApplication, DNS, File, FileHash, Host, IP, Mailbox, MailCluster, MailMessage, Malware, Process, RegistryKey, RegistryValue, SecurityGroup, SubmissionMail, URL."
   }
+}
+
+variable "group_by_alert_details" {
+  description = "A list of alert details to group by, only when the entity_matching_method is Selected."
+  type        = list(string)
+  default     = []
+}
+
+variable "group_by_custom_details" {
+  description = "A list of custom details keys to group by, only when the entity_matching_method is Selected."
+  type        = list(string)
+  default     = []
 }
