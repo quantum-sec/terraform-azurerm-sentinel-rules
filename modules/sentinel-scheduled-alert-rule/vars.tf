@@ -98,13 +98,13 @@ variable "reopen_closed_incidents" {
 }
 
 variable "entity_matching_method" {
-  description = "The method used to group incidents (one of `All`, `Custom`, or `None`). When set to `Custom` you must also specify the `group_by` argument."
+  description = "The method used to group incidents."
   type        = string
-  default     = "None"
+  default     = "AnyAlert"
 
   validation {
-    condition     = contains(["All", "Custom", "None"], var.entity_matching_method)
-    error_message = "The entity_matching_method items contain non-valid value. Possible values are All, Custom, or  None."
+    condition     = contains(["AnyAlert", "Selected", "AllEntities"], var.entity_matching_method)
+    error_message = "The entity_matching_method items contain non-valid value. Possible values are AnyAlert, Selected and AllEntities."
   }
 }
 
