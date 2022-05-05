@@ -37,5 +37,7 @@ module "rule" {
   lookback_duration       = lookup(local.create_incident_grouping, "lookbackDuration", null)
   reopen_closed_incidents = lookup(local.create_incident_grouping, "reopenClosedIncidents", null)
   entity_matching_method  = lookup(local.create_incident_grouping, "entityMatchingMethod", "None")
-  group_by                = lookup(local.create_incident_grouping, "groupByEntities", [])
+  group_by_entities       = lookup(local.create_incident_grouping, "groupByEntities", [])
+  group_by_alert_details  = lookup(local.create_incident_grouping, "groupByAlertDetails", [])
+  group_by_custom_details = lookup(local.create_incident_grouping, "groupByCustomDetails", [])
 }
