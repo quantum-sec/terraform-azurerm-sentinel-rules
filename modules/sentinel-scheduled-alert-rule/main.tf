@@ -35,7 +35,9 @@ resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
         lookback_duration       = var.lookback_duration
         reopen_closed_incidents = var.reopen_closed_incidents
         entity_matching_method  = var.entity_matching_method
-        group_by                = var.group_by
+        group_by_entities       = var.group_by_entities
+        group_by_alert_details  = var.group_by_alert_details
+        group_by_custom_details = var.group_by_custom_details
       }
     }
   }
