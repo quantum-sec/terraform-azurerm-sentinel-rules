@@ -41,4 +41,18 @@ resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
       }
     }
   }
+
+  dynamic "entity_mapping" {
+    for_each = var.entity_mappings
+    content {
+      entity_type = entity_mapping.value["entityType"]
+      dynamic "field_mapping" {
+        for_each = entity_mapping.value["fieldMappings"]
+        content {
+          identifier  = field_mapping.value["identifier"]
+          column_name = field_mapping.value["columnName"]
+        }
+      }
+    }
+  }
 }
