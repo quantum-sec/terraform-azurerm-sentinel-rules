@@ -130,3 +130,15 @@ variable "group_by_custom_details" {
   type        = list(string)
   default     = []
 }
+
+variable "entity_mappings" {
+  description = "A list of entities or categories that are associated to the data that is being sent to Sentinel."
+  type = list(object({
+    entityType = string
+    fieldMappings = list(object({
+      identifier = string
+      columnName = string
+    }))
+  }))
+  default = []
+}

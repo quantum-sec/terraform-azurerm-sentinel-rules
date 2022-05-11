@@ -8,6 +8,7 @@ locals {
   path_elements            = split("/", var.path)
   create_incident          = try(lookup(local.rule_data["incidentConfiguration"], "createIncident", false), false)
   create_incident_grouping = try(lookup(local.rule_data["incidentConfiguration"], "grouping", {}), {})
+  entity_mappings          = try(lookup(local.rule_data, "entityMappings", []), [])
 }
 
 module "rule" {
@@ -40,4 +41,5 @@ module "rule" {
   group_by_entities       = lookup(local.create_incident_grouping, "groupByEntities", [])
   group_by_alert_details  = lookup(local.create_incident_grouping, "groupByAlertDetails", [])
   group_by_custom_details = lookup(local.create_incident_grouping, "groupByCustomDetails", [])
+  entity_mappings         = local.entity_mappings
 }
