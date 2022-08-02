@@ -9,6 +9,8 @@ locals {
   create_incident          = try(lookup(local.rule_data["incidentConfiguration"], "createIncident", false), false)
   create_incident_grouping = try(lookup(local.rule_data["incidentConfiguration"], "grouping", {}), {})
   entity_mappings          = try(lookup(local.rule_data, "entityMappings", []), [])
+
+  rule_name = element(local.path_elements, length(local.path_elements) - 1)
 }
 
 module "rule" {
@@ -16,9 +18,9 @@ module "rule" {
 
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
-  name         = element(local.path_elements, length(local.path_elements) - 1)
-  display_name = local.rule_data["displayName"]
-  description  = local.rule_data["description"]
+  name         = local.rule_name
+  display_name = lookup(local.rule_data, "displayName", local.rule_name)
+  description  = lookup(local.rule_data, "description", local.rule_name)
   severity     = local.rule_data["severity"]
   enabled      = local.rule_data["enabled"]
   tactics      = local.rule_data["tactics"]
