@@ -22,8 +22,8 @@ module "rule" {
   display_name = lookup(local.rule_data, "displayName", local.rule_name)
   description  = lookup(local.rule_data, "description", local.rule_name)
   severity     = local.rule_data["severity"]
-  enabled      = local.rule_data["enabled"]
-  tactics      = local.rule_data["tactics"]
+  enabled      = lookup(local.rule_data, "enabled", null)
+  tactics      = lookup(local.rule_data, "tactics", [])
 
   query           = local.rule_data["query"]
   query_frequency = "PT${upper(local.rule_data["queryFrequency"])}"
@@ -33,7 +33,7 @@ module "rule" {
   trigger_threshold = local.rule_data["triggerThreshold"]
 
   suppression_duration = local.rule_data["suppressionEnabled"] == true ? "PT${upper(local.rule_data["suppressionDuration"])}" : null
-  suppression_enabled  = local.rule_data["suppressionEnabled"]
+  suppression_enabled  = lookup(local.rule_data, "suppressionEnabled", null)
 
   create_incident         = local.create_incident
   grouping                = lookup(local.create_incident_grouping, "enabled", null)
