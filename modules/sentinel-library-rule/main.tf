@@ -9,6 +9,8 @@ locals {
   create_incident          = try(lookup(local.rule_data["incidentConfiguration"], "createIncident", false), false)
   create_incident_grouping = try(lookup(local.rule_data["incidentConfiguration"], "grouping", {}), {})
   entity_mappings          = try(lookup(local.rule_data, "entityMappings", []), [])
+
+  rule_name = element(local.path_elements, length(local.path_elements) - 1)
 }
 
 module "rule" {
@@ -16,22 +18,22 @@ module "rule" {
 
   log_analytics_workspace_id = var.log_analytics_workspace_id
 
-  name         = element(local.path_elements, length(local.path_elements) - 1)
-  display_name = local.rule_data["displayName"]
-  description  = local.rule_data["description"]
+  name         = local.rule_name
+  display_name = lookup(local.rule_data, "displayName", local.rule_name)
+  description  = lookup(local.rule_data, "description", local.rule_name)
   severity     = local.rule_data["severity"]
-  enabled      = local.rule_data["enabled"]
-  tactics      = local.rule_data["tactics"]
+  enabled      = lookup(local.rule_data, "enabled", null)
+  tactics      = lookup(local.rule_data, "tactics", [])
 
   query           = local.rule_data["query"]
-  query_frequency = "PT${upper(local.rule_data["queryFrequency"])}"
-  query_period    = "PT${upper(local.rule_data["queryPeriod"])}"
+  query_frequency = length(regexall(".*[YyMmDd]$", local.rule_data["queryFrequency"])) > 0 ? "P${upper(local.rule_data["queryFrequency"])}T0H" : "PT${upper(local.rule_data["queryFrequency"])}"
+  query_period    = length(regexall(".*[YyMmDd]$", local.rule_data["queryPeriod"])) > 0 ? "P${upper(local.rule_data["queryPeriod"])}T0H" : "PT${upper(local.rule_data["queryPeriod"])}"
 
-  trigger_operator  = local.rule_data["triggerOperator"]
+  trigger_operator  = local.rule_data["triggerOperator"] == "gt" ? "GreaterThan" : local.rule_data["triggerOperator"] == "lt" ? "LessThan" : local.rule_data["triggerOperator"]
   trigger_threshold = local.rule_data["triggerThreshold"]
 
-  suppression_duration = local.rule_data["suppressionEnabled"] == true ? "PT${upper(local.rule_data["suppressionDuration"])}" : null
-  suppression_enabled  = local.rule_data["suppressionEnabled"]
+  suppression_duration = try(local.rule_data["suppressionEnabled"] == true ? length(regexall(".*[YyMmDd]$", local.rule_data["suppressionDuration"])) > 0 ? "P${upper(local.rule_data["suppressionDuration"])}T0H" : "PT${upper(local.rule_data["suppressionDuration"])}" : null, null)
+  suppression_enabled  = lookup(local.rule_data, "suppressionEnabled", null)
 
   create_incident         = local.create_incident
   grouping                = lookup(local.create_incident_grouping, "enabled", null)
