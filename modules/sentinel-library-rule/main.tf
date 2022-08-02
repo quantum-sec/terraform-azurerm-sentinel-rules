@@ -26,13 +26,13 @@ module "rule" {
   tactics      = lookup(local.rule_data, "tactics", [])
 
   query           = local.rule_data["query"]
-  query_frequency = "PT${upper(local.rule_data["queryFrequency"])}"
-  query_period    = "PT${upper(local.rule_data["queryPeriod"])}"
+  query_frequency = length(regexall(".*[YyMmDd]$", local.rule_data["queryFrequency"])) > 0 ? "P${upper(local.rule_data["queryFrequency"])}T0H" : "PT${upper(local.rule_data["queryFrequency"])}"
+  query_period    = length(regexall(".*[YyMmDd]$", local.rule_data["queryPeriod"])) > 0 ? "P${upper(local.rule_data["queryPeriod"])}T0H" : "PT${upper(local.rule_data["queryPeriod"])}"
 
   trigger_operator  = local.rule_data["triggerOperator"]
   trigger_threshold = local.rule_data["triggerThreshold"]
 
-  suppression_duration = local.rule_data["suppressionEnabled"] == true ? "PT${upper(local.rule_data["suppressionDuration"])}" : null
+  suppression_duration = try(local.rule_data["suppressionEnabled"] == true ? length(regexall(".*[YyMmDd]$", local.rule_data["suppressionDuration"])) > 0 ? "P${upper(local.rule_data["suppressionDuration"])}T0H" : "PT${upper(local.rule_data["suppressionDuration"])}" : null, null)
   suppression_enabled  = lookup(local.rule_data, "suppressionEnabled", null)
 
   create_incident         = local.create_incident
