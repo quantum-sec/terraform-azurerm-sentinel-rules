@@ -29,7 +29,7 @@ module "rule" {
   query_frequency = length(regexall(".*[YyMmDd]$", local.rule_data["queryFrequency"])) > 0 ? "P${upper(local.rule_data["queryFrequency"])}T0H" : "PT${upper(local.rule_data["queryFrequency"])}"
   query_period    = length(regexall(".*[YyMmDd]$", local.rule_data["queryPeriod"])) > 0 ? "P${upper(local.rule_data["queryPeriod"])}T0H" : "PT${upper(local.rule_data["queryPeriod"])}"
 
-  trigger_operator  = local.rule_data["triggerOperator"]
+  trigger_operator  = local.rule_data["triggerOperator"] == "gt" ? "GreaterThan" : local.rule_data["triggerOperator"] == "lt" ? "LessThan" : local.rule_data["triggerOperator"]
   trigger_threshold = local.rule_data["triggerThreshold"]
 
   suppression_duration = try(local.rule_data["suppressionEnabled"] == true ? length(regexall(".*[YyMmDd]$", local.rule_data["suppressionDuration"])) > 0 ? "P${upper(local.rule_data["suppressionDuration"])}T0H" : "PT${upper(local.rule_data["suppressionDuration"])}" : null, null)
