@@ -16,7 +16,7 @@ This repository contains modules for deploying and managing Azure sentinel suppo
 
 ---
 
-[build_badge_image]:https://img.shields.io/azure-devops/build/quantum-sec/Quantum/quantum-sec.terraform-azurerm-sentinel-rules/master
+[build_badge_image]:https://img.shields.io/azure-devops/build/quantum-sec/Quantum/quantum-sec.terraform-azurerm-sentinel-rules/main
 [repository_tag_image]:https://img.shields.io/github/tag/quantum-sec/terraform-azurerm-sentinel-rules.svg?label=latest
 [repository_tag_link]:https://github.com/quantum-sec/terraform-azurerm-sentinel-rules/releases/latest
 [terraform_version_image]:https://img.shields.io/badge/tf-%3E%3D1.0.x-blue.svg
