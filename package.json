@@ -1,11 +1,11 @@
 {
-  "name": "@quantum-sec/template-terraform-package",
+  "name": "@quantum-sec/terraform-azurerm-sentinel-rules",
   "version": "0.0.0-development",
   "private": true,
-  "description": "{{package_description}}",
+  "description": "Contains modules for deploying and managing Azure Sentinel Alert Rules.",
   "repository": {
     "type": "git",
-    "url": "git@github.com:quantum-sec/template-terraform-package.git"
+    "url": "git@github.com:quantum-sec/terraform-azurerm-sentinel-rules.git"
   },
   "author": "Quantum Security Pte. Ltd.",
   "license": "Apache-2.0"

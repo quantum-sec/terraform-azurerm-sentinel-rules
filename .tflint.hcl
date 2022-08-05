@@ -60,3 +60,7 @@ rule "terraform_unused_declarations" {
 rule "terraform_unused_required_providers" {
   enabled = true
 }
+
+plugin "azurerm" {
+  enabled = true
+}
