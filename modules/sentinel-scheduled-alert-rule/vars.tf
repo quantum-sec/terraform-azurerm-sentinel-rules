@@ -66,6 +66,7 @@ variable "suppression_enabled" {
 variable "trigger_operator" {
   description = "The alert trigger operator applied to `trigger_threshold`. One of `Equal`, `GreaterThan`, `LessThan`, `NotEqual`."
   type        = string
+  default     = "GreaterThan"
 }
 
 variable "trigger_threshold" {
