@@ -72,6 +72,7 @@ variable "trigger_operator" {
 variable "trigger_threshold" {
   description = "The threshold of query results returned, compared by `trigger_operator`, that would cause this rule to trigger an alert."
   type        = string
+  default     = "0"
 }
 
 variable "create_incident" {
