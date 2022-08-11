@@ -21,7 +21,7 @@ module "rule" {
   name         = local.rule_name
   display_name = try(lookup(local.rule_data, "displayName", "name"), local.rule_name)
   description  = lookup(local.rule_data, "description", local.rule_name)
-  severity     = local.rule_data["severity"]
+  severity     = title(local.rule_data["severity"])
   enabled      = lookup(local.rule_data, "enabled", true)
   tactics      = lookup(local.rule_data, "tactics", [])
 
