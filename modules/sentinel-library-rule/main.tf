@@ -12,8 +12,8 @@ locals {
   trigger_operator         = try(lookup(local.rule_data["triggerOperator"]), "gt")
   rule_name                = element(local.path_elements, length(local.path_elements) - 1)
   severity                 = try(lookup(local.rule_data["severity"]), "Low")
-  query_frequency          = try(length(regexall(".*[Dd]$", local.rule_data["queryFrequency"])) > 0 ? "P${upper(local.rule_data["queryFrequency"])}T0H" : "PT${upper(local.rule_data["queryFrequency"])}")
-  query_period             = try(length(regexall(".*[Dd]$", local.rule_data["queryPeriod"])) > 0 ? "P${upper(local.rule_data["queryPeriod"])}T0H" : "PT${upper(local.rule_data["queryPeriod"])}")
+  query_frequency          = try(length(regexall(".*[Dd]$", local.rule_data["queryFrequency"])) > 0 ? "P${upper(local.rule_data["queryFrequency"])}T0H" : "PT${upper(local.rule_data["queryFrequency"])}", "PT5H")
+  query_period             = try(length(regexall(".*[Dd]$", local.rule_data["queryPeriod"])) > 0 ? "P${upper(local.rule_data["queryPeriod"])}T0H" : "PT${upper(local.rule_data["queryPeriod"])}", "PT5H")
 }
 
 module "rule" {
