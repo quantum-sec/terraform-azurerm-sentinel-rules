@@ -11,6 +11,7 @@ locals {
   entity_mappings          = try(lookup(local.rule_data, "entityMappings", []), [])
   trigger_operator         = try(lookup(local.rule_data["triggerOperator"]), "gt")
   rule_name                = element(local.path_elements, length(local.path_elements) - 1)
+  severity                 = try(lookup(local.rule_data["severity"]), "Low")
 }
 
 module "rule" {
@@ -21,7 +22,7 @@ module "rule" {
   name         = local.rule_name
   display_name = try(lookup(local.rule_data, "displayName", "name"), local.rule_name)
   description  = lookup(local.rule_data, "description", local.rule_name)
-  severity     = lookup(title(local.rule_data["severity"]), "Low")
+  severity     = title(local.severity)
   enabled      = lookup(local.rule_data, "enabled", true)
   tactics      = lookup(local.rule_data, "tactics", [])
 
