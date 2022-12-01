@@ -67,12 +67,6 @@ variable "custom_automation_rule_path" {
   default     = ""
 }
 
-variable "subscription_id" {
-  description = "The subscription in which the resource group is in."
-  type        = string
-  default     = ""
-}
-
 variable "resource_group_name" {
   description = "The name of the resource group in which the playbook is provisioned."
   type        = string

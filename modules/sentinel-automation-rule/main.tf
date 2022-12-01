@@ -40,6 +40,9 @@ resource "azurerm_sentinel_automation_rule" "automation_rule" {
 # CUSTOM CONTENT DEPLOYMENT FOR AUTOMATION RULE
 # ---------------------------------------------------------------------------------------------------------------------
 
+data "azurerm_subscription" "current" {
+}
+
 resource "azurerm_sentinel_automation_rule" "automation_rule_default" {
 
   for_each = var.default_automation_rules
@@ -64,7 +67,7 @@ resource "azurerm_sentinel_automation_rule" "automation_rule_default" {
 
     content {
       order        = action_playbook.value["order"]
-      logic_app_id = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group_name}/providers/Microsoft.Logic/workflows/${action_playbook.value["logic_app_id"]}"
+      logic_app_id = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/resourceGroups/${var.resource_group_name}/providers/Microsoft.Logic/workflows/${action_playbook.value["logic_app_id"]}"
       tenant_id    = try(action_playbook.value["tenant_id"], null)
     }
   }
@@ -108,7 +111,7 @@ resource "azurerm_sentinel_automation_rule" "automation_rule_custom" {
 
     content {
       order        = action_playbook.value["order"]
-      logic_app_id = "/subscriptions/${var.subscription_id}/resourceGroups/${var.resource_group_name}/providers/Microsoft.Logic/workflows/${action_playbook.value["logic_app_id"]}"
+      logic_app_id = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/resourceGroups/${var.resource_group_name}/providers/Microsoft.Logic/workflows/${action_playbook.value["logic_app_id"]}"
       tenant_id    = try(action_playbook.value["tenant_id"], null)
     }
   }

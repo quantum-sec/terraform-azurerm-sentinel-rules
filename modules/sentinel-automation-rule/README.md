@@ -19,6 +19,7 @@
 | [azurerm_sentinel_automation_rule.automation_rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/sentinel_automation_rule) | resource |
 | [azurerm_sentinel_automation_rule.automation_rule_custom](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/sentinel_automation_rule) | resource |
 | [azurerm_sentinel_automation_rule.automation_rule_default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/sentinel_automation_rule) | resource |
+| [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
 
 ## Inputs
 
@@ -37,7 +38,6 @@
 | <a name="input_expiration"></a> [expiration](#input\_expiration) | The UTC time in RFC3339 format | `string` | `null` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group in which the playbook is provisioned. | `string` | `""` | no |
 | <a name="input_rule_order"></a> [rule\_order](#input\_rule\_order) | The order of this Sentinel Automation Rule | `number` | `1` | no |
-| <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id) | The subscription in which the resource group is in. | `string` | `""` | no |
 
 ## Outputs
 
