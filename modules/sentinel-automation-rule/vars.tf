@@ -48,3 +48,33 @@ variable "expiration" {
   type        = string
   default     = null
 }
+
+variable "default_automation_rules" {
+  description = "A list of default automation rules to be deployed."
+  type        = set(string)
+  default     = []
+}
+
+variable "custom_automation_rules" {
+  description = "A list of custom automation rules to be deployed from the custom-workbooks folder."
+  type        = set(string)
+  default     = []
+}
+
+variable "custom_automation_rule_path" {
+  description = "A path to the custom automation rules."
+  type        = string
+  default     = ""
+}
+
+variable "subscription_id" {
+  description = "The subscription in which the resource group is in."
+  type        = string
+  default     = ""
+}
+
+variable "resource_group_name" {
+  description = "The name of the resource group in which the playbook is provisioned."
+  type        = string
+  default     = ""
+}
