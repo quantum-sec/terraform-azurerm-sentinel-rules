@@ -70,5 +70,4 @@ variable "custom_automation_rule_path" {
 variable "resource_group_name" {
   description = "The name of the resource group in which the playbook is provisioned."
   type        = string
-  default     = ""
 }
