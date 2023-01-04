@@ -24,6 +24,7 @@ module "rule" {
   severity     = title(local.rule_data["severity"])
   enabled      = lookup(local.rule_data, "enabled", true)
   tactics      = lookup(local.rule_data, "tactics", [])
+  techniques   = lookup(local.rule_data, "techniques", [])
 
   query           = local.rule_data["query"]
   query_frequency = length(regexall(".*[Dd]$", local.rule_data["queryFrequency"])) > 0 ? "P${upper(local.rule_data["queryFrequency"])}T0H" : "PT${upper(local.rule_data["queryFrequency"])}"
