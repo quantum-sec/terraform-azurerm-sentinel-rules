@@ -28,6 +28,11 @@ variable "tactics" {
   type        = set(string)
 }
 
+variable "techniques" {
+  description = "A set of attack techniques that represent 'how' an adversary achieves a tactical goal by performing an action."
+  type        = set(string)
+}
+
 variable "description" {
   description = "The rule description."
   type        = string
