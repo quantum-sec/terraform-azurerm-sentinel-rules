@@ -23,6 +23,7 @@ resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
   severity                   = var.severity
   query                      = var.query
   tactics                    = var.tactics
+  techniques                 = [for t in var.techniques : substr(t, 0, 5)] # The expected format is 'T####', where '#' represents a digit. No support for sub-techniques yet.
   description                = var.description
   enabled                    = var.enabled
   query_frequency            = var.query_frequency
