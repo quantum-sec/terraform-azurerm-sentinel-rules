@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0"
+      version = "~> 3.42"
     }
   }
   required_version = ">= 0.12.26"
@@ -51,7 +51,11 @@ resource "azurerm_sentinel_automation_rule" "automation_rule_default" {
   log_analytics_workspace_id = var.log_analytics_workspace_id
   name                       = uuidv5("dns", jsondecode(file("${path.module}/../../content/automation-rules/${each.value}.json"))["display_name"])
   order                      = jsondecode(file("${path.module}/../../content/automation-rules/${each.value}.json"))["rule_order"]
+  condition_json             = try(jsonencode(jsondecode(file("${path.module}/../../content/automation-rules/${each.value}.json"))["condition_json"]), null)
+  triggers_on                = try(jsondecode(file("${path.module}/../../content/automation-rules/${each.value}.json"))["triggers_on"], null)
+  triggers_when              = try(jsondecode(file("${path.module}/../../content/automation-rules/${each.value}.json"))["triggers_when"], null)
 
+  // To deprecate in favor of condition_json
   dynamic "condition" {
     for_each = try(jsondecode(file("${path.module}/../../content/automation-rules/${each.value}.json"))["conditions"], [])
 
@@ -95,7 +99,11 @@ resource "azurerm_sentinel_automation_rule" "automation_rule_custom" {
   log_analytics_workspace_id = var.log_analytics_workspace_id
   name                       = uuidv5("dns", jsondecode(file("${var.custom_automation_rule_path}/${each.value}.json"))["display_name"])
   order                      = jsondecode(file("${var.custom_automation_rule_path}/${each.value}.json"))["rule_order"]
+  condition_json             = try(jsonencode(jsondecode(file("${var.custom_automation_rule_path}/${each.value}.json"))["condition_json"]), null)
+  triggers_on                = try(jsondecode(file("${var.custom_automation_rule_path}/${each.value}.json"))["triggers_on"], null)
+  triggers_when              = try(jsondecode(file("${var.custom_automation_rule_path}/${each.value}.json"))["triggers_when"], null)
 
+  // To deprecate in favor of condition_json
   dynamic "condition" {
     for_each = try(jsondecode(file("${var.custom_automation_rule_path}/${each.value}.json"))["conditions"], [])
 
