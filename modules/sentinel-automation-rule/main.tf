@@ -71,7 +71,7 @@ resource "azurerm_sentinel_automation_rule" "automation_rule_default" {
 
     content {
       order        = action_playbook.value["order"]
-      logic_app_id = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/resourceGroups/${var.resource_group_name}/providers/Microsoft.Logic/workflows/${action_playbook.value["logic_app_id"]}"
+      logic_app_id = "/subscriptions/${data.azurerm_subscription.current.subscription_id}/resourceGroups/${var.resource_group_name}/providers/Microsoft.Logic/workflows/${try(action_playbook.value["prefixed"], false) ? "${var.unique_name_prefix}-${action_playbook.value["logic_app_id"]}-${var.environment}" : action_playbook.value["logic_app_id"]}"
       tenant_id    = try(action_playbook.value["tenant_id"], null)
     }
   }

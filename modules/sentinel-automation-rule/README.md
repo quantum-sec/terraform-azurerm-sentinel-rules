@@ -26,9 +26,11 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_display_name"></a> [display\_name](#input\_display\_name) | n/a | `string` | n/a | yes |
+| <a name="input_environment"></a> [environment](#input\_environment) | The type of environment (e.g. `dev`, `stage`, or `prod`). | `string` | n/a | yes |
 | <a name="input_log_analytics_workspace_id"></a> [log\_analytics\_workspace\_id](#input\_log\_analytics\_workspace\_id) | n/a | `string` | n/a | yes |
 | <a name="input_logic_app_id"></a> [logic\_app\_id](#input\_logic\_app\_id) | n/a | `string` | n/a | yes |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | The name of the resource group in which the playbook is provisioned. | `string` | n/a | yes |
+| <a name="input_unique_name_prefix"></a> [unique\_name\_prefix](#input\_unique\_name\_prefix) | A unique string prepended to the resource name to ensure it is globally unique (i.e. your company name). | `string` | n/a | yes |
 | <a name="input_unique_prefix"></a> [unique\_prefix](#input\_unique\_prefix) | Unique string used to generate a UUID. | `string` | n/a | yes |
 | <a name="input_action_order"></a> [action\_order](#input\_action\_order) | The execution order of this action | `number` | `1` | no |
 | <a name="input_conditions"></a> [conditions](#input\_conditions) | n/a | <pre>list(object({<br>    operator = string<br>    property = string<br>    values   = list(string)<br>  }))</pre> | `[]` | no |
