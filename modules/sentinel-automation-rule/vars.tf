@@ -2,20 +2,8 @@ variable "log_analytics_workspace_id" {
   type = string
 }
 
-variable "default_automation_rules" {
-  description = "A list of default automation rules to be deployed."
-  type        = set(string)
-  default     = []
-}
-
-variable "custom_automation_rules" {
-  description = "A list of custom automation rules to be deployed from the custom-workbooks folder."
-  type        = set(string)
-  default     = []
-}
-
-variable "custom_automation_rule_path" {
-  description = "A path to the custom automation rules."
+variable "file_path" {
+  description = "The file path to the automation rule."
   type        = string
   default     = ""
 }
