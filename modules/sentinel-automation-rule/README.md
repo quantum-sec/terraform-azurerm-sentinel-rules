@@ -17,6 +17,7 @@
 | Name | Type |
 |------|------|
 | [azurerm_sentinel_automation_rule.sentinel_automation_rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/sentinel_automation_rule) | resource |
+| [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) | data source |
 
 ## Inputs
 

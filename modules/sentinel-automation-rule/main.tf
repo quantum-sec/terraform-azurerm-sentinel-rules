@@ -16,6 +16,9 @@ locals {
   automation_rule_object = jsondecode(file("${var.file_path}.json"))
 }
 
+data "azurerm_subscription" "current" {
+}
+
 resource "azurerm_sentinel_automation_rule" "sentinel_automation_rule" {
 
   display_name               = local.automation_rule_object["display_name"]
