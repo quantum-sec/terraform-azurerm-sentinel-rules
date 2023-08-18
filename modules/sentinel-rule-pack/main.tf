@@ -1,6 +1,12 @@
 terraform {
   # https://www.terraform.io/docs/language/values/variables.html#custom-validation-rules
-  required_version = ">= 0.13.0"
+  required_version = ">= 1.2"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 3.42"
+    }
+  }
 }
 
 module "rule_pack_rules" {
