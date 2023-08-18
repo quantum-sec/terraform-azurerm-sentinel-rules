@@ -33,6 +33,11 @@ resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
   trigger_operator           = var.trigger_operator
   trigger_threshold          = var.trigger_threshold
 
+  custom_details = {
+    for c in var.custom_details : c.key => c.value
+  }
+
+
   dynamic "incident_configuration" {
     for_each = local.incident_configuration
     content {
