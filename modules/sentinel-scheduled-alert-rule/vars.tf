@@ -149,3 +149,12 @@ variable "entity_mappings" {
   }))
   default = []
 }
+
+variable "custom_details" {
+  description = "A list of key value pairs to be attached to this rule as custom details."
+  type = list(object({
+    key   = string
+    value = string
+  }))
+  default = []
+}

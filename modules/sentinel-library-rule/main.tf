@@ -15,6 +15,7 @@ locals {
   create_incident          = try(lookup(local.rule_data["incidentConfiguration"], "createIncident", false), false)
   create_incident_grouping = try(lookup(local.rule_data["incidentConfiguration"], "grouping", {}), {})
   entity_mappings          = try(lookup(local.rule_data, "entityMappings", []), [])
+  custom_details           = try(lookup(local.rule_data, "customDetails", []), [])
 
   rule_name = element(local.path_elements, length(local.path_elements) - 1)
 }
@@ -51,4 +52,5 @@ module "rule" {
   group_by_alert_details  = lookup(local.create_incident_grouping, "groupByAlertDetails", [])
   group_by_custom_details = lookup(local.create_incident_grouping, "groupByCustomDetails", [])
   entity_mappings         = local.entity_mappings
+  custom_details          = local.custom_details
 }
