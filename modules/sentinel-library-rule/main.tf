@@ -15,7 +15,7 @@ locals {
   create_incident          = try(lookup(local.rule_data["incidentConfiguration"], "createIncident", false), false)
   create_incident_grouping = try(lookup(local.rule_data["incidentConfiguration"], "grouping", {}), {})
   entity_mappings          = try(lookup(local.rule_data, "entityMappings", []), [])
-  custom_details           = try(lookup(local.rule_data, "customDetails", []), [])
+  custom_details           = try(lookup(local.rule_data, "customDetails", {}), {})
 
   rule_name = element(local.path_elements, length(local.path_elements) - 1)
 }

@@ -32,10 +32,7 @@ resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
   suppression_enabled        = var.suppression_enabled
   trigger_operator           = var.trigger_operator
   trigger_threshold          = var.trigger_threshold
-
-  custom_details = {
-    for c in var.custom_details : c.key => c.value
-  }
+  custom_details             = var.custom_details
 
 
   dynamic "incident_configuration" {
