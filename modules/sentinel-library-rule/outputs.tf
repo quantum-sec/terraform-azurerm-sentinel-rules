@@ -1,3 +1,3 @@
 output "id" {
-  value = module.rule.id
+  value = azurerm_sentinel_alert_rule_scheduled.rule.id
 }

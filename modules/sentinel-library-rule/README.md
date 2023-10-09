@@ -6,11 +6,17 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.42 |
 
-## Modules
+## Providers
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_rule"></a> [rule](#module\_rule) | ../sentinel-scheduled-alert-rule | n/a |
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.42 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [azurerm_sentinel_alert_rule_scheduled.rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/sentinel_alert_rule_scheduled) | resource |
 
 ## Inputs
 
