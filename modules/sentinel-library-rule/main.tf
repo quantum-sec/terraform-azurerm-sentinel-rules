@@ -9,48 +9,60 @@ terraform {
 }
 
 locals {
-  root_dir                 = coalesce(var.content_path_rules, "${path.module}/../../content/rules")
-  rule_data                = yamldecode(file("${local.root_dir}/${var.path}.yaml"))
+  rule_data                = yamldecode(var.rule)
   path_elements            = split("/", var.path)
+  rule_name                = element(local.path_elements, length(local.path_elements) - 1)
   create_incident          = try(lookup(local.rule_data["incidentConfiguration"], "createIncident", false), false)
   create_incident_grouping = try(lookup(local.rule_data["incidentConfiguration"], "grouping", {}), {})
   entity_mappings          = try(lookup(local.rule_data, "entityMappings", []), [])
-  custom_details           = try(lookup(local.rule_data, "customDetails", {}), {})
-
-  rule_name = element(local.path_elements, length(local.path_elements) - 1)
 }
 
-module "rule" {
-  source = "../sentinel-scheduled-alert-rule"
-
+resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
+  name                       = local.rule_name
   log_analytics_workspace_id = var.log_analytics_workspace_id
+  display_name               = lookup(local.rule_data, "displayName", local.rule_name)
+  severity                   = title(local.rule_data["severity"])
+  query                      = local.rule_data["query"]
+  tactics                    = lookup(local.rule_data, "tactics", [])
+  techniques                 = [for t in lookup(local.rule_data, "techniques", []) : substr(t, 0, 5)] # The expected format is 'T####', where '#' represents a digit. No support for sub-techniques yet.
+  description                = lookup(local.rule_data, "description", local.rule_name)
+  enabled                    = lookup(local.rule_data, "enabled", true)
+  query_frequency            = length(regexall(".*[Dd]$", local.rule_data["queryFrequency"])) > 0 ? "P${upper(local.rule_data["queryFrequency"])}T0H" : "PT${upper(local.rule_data["queryFrequency"])}"
+  query_period               = length(regexall(".*[Dd]$", local.rule_data["queryPeriod"])) > 0 ? "P${upper(local.rule_data["queryPeriod"])}T0H" : "PT${upper(local.rule_data["queryPeriod"])}"
+  suppression_duration       = try(local.rule_data["suppressionEnabled"] == true ? length(regexall(".*[YyMmDd]$", local.rule_data["suppressionDuration"])) > 0 ? "P${upper(local.rule_data["suppressionDuration"])}T0H" : "PT${upper(local.rule_data["suppressionDuration"])}" : null, null)
+  suppression_enabled        = lookup(local.rule_data, "suppressionEnabled", false)
+  trigger_operator           = local.rule_data["triggerOperator"] == "gt" ? "GreaterThan" : local.rule_data["triggerOperator"] == "lt" ? "LessThan" : local.rule_data["triggerOperator"]
+  trigger_threshold          = local.rule_data["triggerThreshold"]
+  custom_details             = try(lookup(local.rule_data, "customDetails", {}), {})
 
-  name         = local.rule_name
-  display_name = lookup(local.rule_data, "displayName", local.rule_name)
-  description  = lookup(local.rule_data, "description", local.rule_name)
-  severity     = title(local.rule_data["severity"])
-  enabled      = lookup(local.rule_data, "enabled", true)
-  tactics      = lookup(local.rule_data, "tactics", [])
-  techniques   = lookup(local.rule_data, "techniques", [])
 
-  query           = local.rule_data["query"]
-  query_frequency = length(regexall(".*[Dd]$", local.rule_data["queryFrequency"])) > 0 ? "P${upper(local.rule_data["queryFrequency"])}T0H" : "PT${upper(local.rule_data["queryFrequency"])}"
-  query_period    = length(regexall(".*[Dd]$", local.rule_data["queryPeriod"])) > 0 ? "P${upper(local.rule_data["queryPeriod"])}T0H" : "PT${upper(local.rule_data["queryPeriod"])}"
+  dynamic "incident_configuration" {
+    for_each = local.create_incident == null ? [] : ["enabled"]
+    content {
+      create_incident = local.create_incident
+      grouping {
+        enabled                 = lookup(local.create_incident_grouping, "enabled", null)
+        lookback_duration       = lookup(local.create_incident_grouping, "lookbackDuration", null)
+        reopen_closed_incidents = lookup(local.create_incident_grouping, "reopenClosedIncidents", null)
+        entity_matching_method  = lookup(local.create_incident_grouping, "entityMatchingMethod", "AnyAlert")
+        group_by_entities       = lookup(local.create_incident_grouping, "groupByEntities", [])
+        group_by_alert_details  = lookup(local.create_incident_grouping, "groupByAlertDetails", [])
+        group_by_custom_details = lookup(local.create_incident_grouping, "groupByCustomDetails", [])
+      }
+    }
+  }
 
-  trigger_operator  = local.rule_data["triggerOperator"] == "gt" ? "GreaterThan" : local.rule_data["triggerOperator"] == "lt" ? "LessThan" : local.rule_data["triggerOperator"]
-  trigger_threshold = local.rule_data["triggerThreshold"]
-
-  suppression_duration = try(local.rule_data["suppressionEnabled"] == true ? length(regexall(".*[YyMmDd]$", local.rule_data["suppressionDuration"])) > 0 ? "P${upper(local.rule_data["suppressionDuration"])}T0H" : "PT${upper(local.rule_data["suppressionDuration"])}" : null, null)
-  suppression_enabled  = lookup(local.rule_data, "suppressionEnabled", false)
-
-  create_incident         = local.create_incident
-  grouping                = lookup(local.create_incident_grouping, "enabled", null)
-  lookback_duration       = lookup(local.create_incident_grouping, "lookbackDuration", null)
-  reopen_closed_incidents = lookup(local.create_incident_grouping, "reopenClosedIncidents", null)
-  entity_matching_method  = lookup(local.create_incident_grouping, "entityMatchingMethod", "AnyAlert")
-  group_by_entities       = lookup(local.create_incident_grouping, "groupByEntities", [])
-  group_by_alert_details  = lookup(local.create_incident_grouping, "groupByAlertDetails", [])
-  group_by_custom_details = lookup(local.create_incident_grouping, "groupByCustomDetails", [])
-  entity_mappings         = local.entity_mappings
-  custom_details          = local.custom_details
+  dynamic "entity_mapping" {
+    for_each = local.entity_mappings == null ? [] : local.entity_mappings
+    content {
+      entity_type = entity_mapping.value["entityType"]
+      dynamic "field_mapping" {
+        for_each = entity_mapping.value["fieldMappings"]
+        content {
+          identifier  = field_mapping.value["identifier"]
+          column_name = field_mapping.value["columnName"]
+        }
+      }
+    }
+  }
 }

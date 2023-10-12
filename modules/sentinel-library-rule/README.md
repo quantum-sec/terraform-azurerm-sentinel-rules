@@ -6,11 +6,17 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.42 |
 
-## Modules
+## Providers
 
-| Name | Source | Version |
-|------|--------|---------|
-| <a name="module_rule"></a> [rule](#module\_rule) | ../sentinel-scheduled-alert-rule | n/a |
+| Name | Version |
+|------|---------|
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.42 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [azurerm_sentinel_alert_rule_scheduled.rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/sentinel_alert_rule_scheduled) | resource |
 
 ## Inputs
 
@@ -18,7 +24,7 @@
 |------|-------------|------|---------|:--------:|
 | <a name="input_log_analytics_workspace_id"></a> [log\_analytics\_workspace\_id](#input\_log\_analytics\_workspace\_id) | The ID of the Log Analytics workspace in which Azure Sentinel is deployed. | `string` | n/a | yes |
 | <a name="input_path"></a> [path](#input\_path) | The relative path of the rule definition from the rules directory, excluding its file extension. | `string` | n/a | yes |
-| <a name="input_content_path_rules"></a> [content\_path\_rules](#input\_content\_path\_rules) | The path to the rules directory.<br><br>Default empty value will use pre-packaged rules.<br>If you have rules in /opt/xdr/content/rules then you may want to provide a value of "/opt/xdr/content/rules" | `string` | `""` | no |
+| <a name="input_rule"></a> [rule](#input\_rule) | The rule definition. | `string` | n/a | yes |
 
 ## Outputs
 
