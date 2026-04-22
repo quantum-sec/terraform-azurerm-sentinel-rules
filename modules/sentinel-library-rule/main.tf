@@ -1,9 +1,9 @@
 terraform {
-  required_version = ">= 1.2"
+  required_version = ">= 1.5"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 3.42"
+      version = ">= 4.54"
     }
   }
 }
@@ -36,18 +36,18 @@ resource "azurerm_sentinel_alert_rule_scheduled" "rule" {
   custom_details             = try(lookup(local.rule_data, "customDetails", {}), {})
 
 
-  dynamic "incident_configuration" {
+  dynamic "incident" {
     for_each = local.create_incident == null ? [] : ["enabled"]
     content {
-      create_incident = local.create_incident
+      create_incident_enabled = local.create_incident
       grouping {
         enabled                 = lookup(local.create_incident_grouping, "enabled", null)
         lookback_duration       = lookup(local.create_incident_grouping, "lookbackDuration", null)
         reopen_closed_incidents = lookup(local.create_incident_grouping, "reopenClosedIncidents", null)
         entity_matching_method  = lookup(local.create_incident_grouping, "entityMatchingMethod", "AnyAlert")
-        group_by_entities       = lookup(local.create_incident_grouping, "groupByEntities", [])
-        group_by_alert_details  = lookup(local.create_incident_grouping, "groupByAlertDetails", [])
-        group_by_custom_details = lookup(local.create_incident_grouping, "groupByCustomDetails", [])
+        by_entities             = lookup(local.create_incident_grouping, "groupByEntities", [])
+        by_alert_details        = lookup(local.create_incident_grouping, "groupByAlertDetails", [])
+        by_custom_details       = lookup(local.create_incident_grouping, "groupByCustomDetails", [])
       }
     }
   }
