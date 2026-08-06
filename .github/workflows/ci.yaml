@@ -11,12 +11,17 @@ on:
     branches:
       - master
       - main
-      - feature/*
-      - fix/*
   pull_request:
     branches:
       - master
       - main
+
+# Serialize runs per ref (the old trigger's `batch: true` equivalent): two
+# quick pushes to the default branch queue instead of racing two release
+# jobs; superseded runs are not cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   validation:
