@@ -8,5 +8,10 @@
     "url": "git@github.com:quantum-sec/terraform-azurerm-sentinel-rules.git"
   },
   "author": "Quantum Security Pte. Ltd.",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@cncsc/cncsc-changelog-convention": "^1.0.2",
+    "@cncsc/semantic-release-config": "^1.0.3",
+    "semantic-release": "^21.0.7"
+  }
 }
