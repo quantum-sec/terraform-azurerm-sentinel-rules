@@ -16,9 +16,11 @@ on:
       - master
       - main
 
-# Serialize runs per ref (the old trigger's `batch: true` equivalent): two
-# quick pushes to the default branch queue instead of racing two release
-# jobs; superseded runs are not cancelled.
+# Serialize runs per ref so two default-branch pushes never race two
+# release jobs. The in-progress run always completes; a pending run
+# superseded by a newer push is replaced by it (safe here: releases are
+# cumulative and validation scans the full tree, so the surviving run
+# covers the replaced one's content).
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
